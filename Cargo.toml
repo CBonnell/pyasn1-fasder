@@ -1,0 +1,15 @@
+[package]
+name = "pyasn1-fasder"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "pyasn1_fasder"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.20.0", features = ["num-bigint"] }
+der = { version = "0.7.8", features = ["oid"] }
+num-bigint = "0.4.4"
+itertools = "0.12.0"
