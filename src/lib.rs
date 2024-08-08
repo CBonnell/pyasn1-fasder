@@ -126,7 +126,7 @@ fn decode_der_rec<'py>(m: NativeHelperModule<'py>, substrate: &'py [u8], asn1_sp
     };
 
     if substrate.len() != tlv_octets.len() {
-        return Err(Pyasn1FasderError::new_err(format!("{} trailing octets after TLV near substrate offset {}", substrate.len() - tlv_octets.len(), offset)));
+        return Err(Pyasn1FasderError::new_err(format!("{} trailing octet(s) after TLV near substrate offset {}", substrate.len() - tlv_octets.len(), offset)));
     }
 
     // initialize tag and tagSet from decoded substrate

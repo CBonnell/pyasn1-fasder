@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.2 - 2024-08-08
+
+### Fixes
+
+- Fix pluralization in error message for trailing octets after TLV
+
 ## v0.1.1 - 2024-08-07
 
 ### Fixes
