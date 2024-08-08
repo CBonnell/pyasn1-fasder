@@ -1,6 +1,8 @@
 use der::{Encode, Header, Reader};
-use pyo3::{PyAny, PyErr, PyResult};
-use pyo3::prelude::PyModule;
+use pyo3::PyAny;
+use pyo3::PyErr;
+use pyo3::PyResult;
+use pyo3::prelude::{PyModule};
 use pyo3::types::PyDict;
 use crate::{HELPER_MODULE_ATTR, NativeHelperModule, Pyasn1FasderError, TYPE_MAP};
 use crate::asn1_type::{AnyDecoder, BitStringDecoder, BooleanDecoder, CharacterStringDecoder, ChoiceDecoder, Decoder, IntegerDecoder, NullDecoder, ObjectIdentifierDecoder, OctetStringDecoder, PrintableStringDecoder, SequenceDecoder, SequenceOfDecoder, SetOfDecoder};
@@ -129,31 +131,31 @@ pub fn decode_asn1_spec_value(step: DecodeStep) -> PyResult<&PyAny> {
         Some(decoder_id) => {
             let decoder_id_u8: usize = decoder_id.extract().unwrap();
 
-            let decoder: Box<dyn Decoder> = match decoder_id_u8 {
-                DECODER_TYPE_BOOLEAN => Box::new(BooleanDecoder::new(step)),
-                DECODER_TYPE_INTEGER => Box::new(IntegerDecoder::new(step, "INTEGER")),
-                DECODER_TYPE_BITSTRING => Box::new(BitStringDecoder::new(step)),
-                DECODER_TYPE_OCTETSTRING => Box::new(OctetStringDecoder::new(step)),
-                DECODER_TYPE_NULL => Box::new(NullDecoder::new(step)),
-                DECODER_TYPE_OBJECTIDENTIFIER => Box::new(ObjectIdentifierDecoder::new(step)),
-                DECODER_TYPE_ENUMERATED => Box::new(IntegerDecoder::new(step, "ENUMERATED")),
-                DECODER_TYPE_UTF8STRING => Box::new(CharacterStringDecoder::new(step, "UTF8STRING")),
-                DECODER_TYPE_SEQUENCE => Box::new(SequenceDecoder::new(step)),
-                DECODER_TYPE_SEQUENCEOF => Box::new(SequenceOfDecoder::new(step)),
-                DECODER_TYPE_SETOF => Box::new(SetOfDecoder::new(step)),
-                DECODER_TYPE_NUMERICSTRING => Box::new(CharacterStringDecoder::new(step, "NUMERICSTRING")),
-                DECODER_TYPE_PRINTABLESTRING => Box::new(PrintableStringDecoder::new(step)),
-                DECODER_TYPE_TELETEXSTRING => Box::new(CharacterStringDecoder::new(step, "TELETEXSTRING")),
-                DECODER_TYPE_VIDEOTEXSTRING => Box::new(CharacterStringDecoder::new(step, "VIDEOTEXSTRING")),
-                DECODER_TYPE_IA5STRING => Box::new(CharacterStringDecoder::new(step, "IA5STRING")),
-                DECODER_TYPE_UTCTIME => Box::new(CharacterStringDecoder::new(step, "UTCTIME")),
-                DECODER_TYPE_GENERALIZEDTIME => Box::new(CharacterStringDecoder::new(step, "GENERALIZEDTIME")),
-                DECODER_TYPE_GRAPHICSTRING => Box::new(CharacterStringDecoder::new(step, "GRAPHICSTRING")),
-                DECODER_TYPE_VISIBLESTRING => Box::new(CharacterStringDecoder::new(step, "VISIBLESTRING")),
-                DECODER_TYPE_UNIVERSALSTRING => Box::new(CharacterStringDecoder::new(step, "UNIVERSALSTRING")),
-                DECODER_TYPE_BMPSTRING => Box::new(CharacterStringDecoder::new(step, "BMPSTRING")),
-                DECODER_TYPE_ANY => Box::new(AnyDecoder::new(step)),
-                DECODER_TYPE_CHOICE => Box::new(ChoiceDecoder::new(step)),
+            let decoder: &dyn Decoder = match decoder_id_u8 {
+                DECODER_TYPE_BOOLEAN => &BooleanDecoder::new(step),
+                DECODER_TYPE_INTEGER => &IntegerDecoder::new(step, "INTEGER"),
+                DECODER_TYPE_BITSTRING => &BitStringDecoder::new(step),
+                DECODER_TYPE_OCTETSTRING => &OctetStringDecoder::new(step),
+                DECODER_TYPE_NULL => &NullDecoder::new(step),
+                DECODER_TYPE_OBJECTIDENTIFIER => &ObjectIdentifierDecoder::new(step),
+                DECODER_TYPE_ENUMERATED => &IntegerDecoder::new(step, "ENUMERATED"),
+                DECODER_TYPE_UTF8STRING => &CharacterStringDecoder::new(step, "UTF8STRING"),
+                DECODER_TYPE_SEQUENCE => &SequenceDecoder::new(step),
+                DECODER_TYPE_SEQUENCEOF => &SequenceOfDecoder::new(step),
+                DECODER_TYPE_SETOF => &SetOfDecoder::new(step),
+                DECODER_TYPE_NUMERICSTRING => &CharacterStringDecoder::new(step, "NUMERICSTRING"),
+                DECODER_TYPE_PRINTABLESTRING => &PrintableStringDecoder::new(step),
+                DECODER_TYPE_TELETEXSTRING => &CharacterStringDecoder::new(step, "TELETEXSTRING"),
+                DECODER_TYPE_VIDEOTEXSTRING => &CharacterStringDecoder::new(step, "VIDEOTEXSTRING"),
+                DECODER_TYPE_IA5STRING => &CharacterStringDecoder::new(step, "IA5STRING"),
+                DECODER_TYPE_UTCTIME => &CharacterStringDecoder::new(step, "UTCTIME"),
+                DECODER_TYPE_GENERALIZEDTIME => &CharacterStringDecoder::new(step, "GENERALIZEDTIME"),
+                DECODER_TYPE_GRAPHICSTRING => &CharacterStringDecoder::new(step, "GRAPHICSTRING"),
+                DECODER_TYPE_VISIBLESTRING => &CharacterStringDecoder::new(step, "VISIBLESTRING"),
+                DECODER_TYPE_UNIVERSALSTRING => &CharacterStringDecoder::new(step, "UNIVERSALSTRING"),
+                DECODER_TYPE_BMPSTRING => &CharacterStringDecoder::new(step, "BMPSTRING"),
+                DECODER_TYPE_ANY => &AnyDecoder::new(step),
+                DECODER_TYPE_CHOICE => &ChoiceDecoder::new(step),
                 _ => return Err(Pyasn1FasderError::new_err("ASN.1 type is unsuppported"))
             };
 

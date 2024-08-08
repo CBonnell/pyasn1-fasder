@@ -9,7 +9,7 @@ name = "pyasn1_fasder"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.20.0", features = ["num-bigint"] }
+pyo3 = { version = "0.20.3", features = ["num-bigint"] }
 der = { version = "0.7.8", features = ["oid"] }
-num-bigint = "0.4.4"
-itertools = "0.12.0"
+num-bigint = "0.4.6"
+itertools = "0.13.0"

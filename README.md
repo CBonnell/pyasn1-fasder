@@ -34,7 +34,7 @@ assert str(decoded) == 'ABC'
 * There is no encoding counterpart.
 * Trailing octets present after the `substrate` TLV are not tolerated and will result in an exception being raised. In other words, the `rest` component of the tuple return value will always be an empty `bytes` object.
 * Schemaless decoding is not supported. In other words, a non-`None` `asn1Spec` must be passed to `decode_der`.
-* `Set`s with `namedValues` are not supported. These are (almost?) never used in cryptography standards, but support can be added if there are valid use cases.
+* `Set`s with `namedTypes` are not supported. These are (almost?) never used in cryptography standards, but support can be added if there are valid use cases.
 * `openTypes` decoding is currently not supported. This can be added if there is interest.
 * The pedantic checks for correctness of encoding cannot be disabled.
 
