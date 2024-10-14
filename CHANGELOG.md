@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.3 - 2024-10-14
+
+### New features/enhancements
+
+- Add Python 3.13 support
+
 ## v0.1.2 - 2024-08-08
 
 ### Fixes
