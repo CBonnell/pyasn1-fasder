@@ -1,6 +1,6 @@
 [package]
 name = "pyasn1-fasder"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -9,7 +9,7 @@ name = "pyasn1_fasder"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.20.3", features = ["num-bigint"] }
+pyo3 = { version = "0.22.4", features = ["abi3", "abi3-py39", "num-bigint"] }
 der = { version = "0.7.8", features = ["oid"] }
 num-bigint = "0.4.6"
 itertools = "0.13.0"

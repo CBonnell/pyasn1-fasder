@@ -1,5 +1,6 @@
-use pyo3::PyResult;
+use pyo3::prelude::PyAnyMethods;
 use pyo3::types::PyModule;
+use pyo3::{Bound, PyResult};
 
 pub const CLASS_MASK: u8 = 0xC0;
 pub const CLASS_UNIVERSAL: u8 = 0x00;
@@ -52,17 +53,17 @@ impl From<u8> for Asn1Tag {
     }
 }
 
-pub fn init_module(m: &PyModule) -> PyResult<()> {
+pub fn init_module(m: &Bound<PyModule>) -> PyResult<()> {
     let py = m.py();
 
-    let pyasn1_tag_mod = py.import("pyasn1.type.tag")?;
+    let pyasn1_tag_mod = py.import_bound("pyasn1.type.tag")?;
 
-    m.add(TAG_CLS, pyasn1_tag_mod.getattr("Tag")?)?;
-    m.add(TAGSET_CLS, pyasn1_tag_mod.getattr("TagSet")?)?;
-    m.add(TAGMAP_CLS, py.import("pyasn1.type.tagmap")?.getattr("TagMap")?)?;
+    m.setattr(TAG_CLS, pyasn1_tag_mod.getattr("Tag")?)?;
+    m.setattr(TAGSET_CLS, pyasn1_tag_mod.getattr("TagSet")?)?;
+    m.setattr(TAGMAP_CLS, py.import_bound("pyasn1.type.tagmap")?.getattr("TagMap")?)?;
 
-    let helper_mod = py.import("pyasn1_fasder._native_helper")?;
+    let helper_mod = py.import_bound("pyasn1_fasder._native_helper")?;
 
-    m.add(TAG_CACHE, helper_mod.getattr(TAG_CACHE)?)?;
-    m.add(TAGSET_CACHE, helper_mod.getattr(TAGSET_CACHE)?)
+    m.setattr(TAG_CACHE, helper_mod.getattr(TAG_CACHE)?)?;
+    m.setattr(TAGSET_CACHE, helper_mod.getattr(TAGSET_CACHE)?)
 }
