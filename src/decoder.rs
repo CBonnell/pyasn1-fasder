@@ -175,7 +175,7 @@ pub fn decode_asn1_spec_value<'py>(step: DecodeStep<'py>) -> PyResult<Bound<'py,
                 Ok(decoded) => {
                     match decoder.verify_decoded(&decoded) {
                         Err(e) => Err(e),
-                        Ok(()) => Ok(decoded.clone())
+                        Ok(()) => Ok(decodede
                     }
                 }
             }
