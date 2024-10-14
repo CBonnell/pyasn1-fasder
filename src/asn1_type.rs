@@ -2,7 +2,7 @@ use crate::decoder::DecodeStep;
 use crate::{decode_der_rec, decode_explicit, decoder, get_chosen_spec, tag, NativeHelperModule, TAGSET_ATTR};
 use der::asn1::{ObjectIdentifier, PrintableStringRef};
 use itertools::Itertools;
-use pyo3::prelude::PyAnyMethods;
+use pyo3::prelude::{PyAnyMethods, PySetMethods};
 use pyo3::types::{IntoPyDict, PyBool, PyBytes, PyDict, PySet, PyString, PyTuple};
 use pyo3::{intern, Bound, IntoPy, PyAny, PyErr, PyResult};
 
@@ -471,7 +471,7 @@ impl<'a, 'py> Decoder<'a, 'py> for SequenceDecoder<'py> {
 
             asn1_object.call_method(intern![py, "setComponentByPosition"], (index, decoded), Some(&get_constructed_set_component_kwargs(&self.step.module())))?;
 
-            seen_indices.add(index)?;
+            PySetMethods::add(&seen_indices, index)?;
 
             index += 1;
             relative_offset += tlv.len();

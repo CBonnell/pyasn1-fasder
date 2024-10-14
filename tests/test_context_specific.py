@@ -1,7 +1,8 @@
 import pytest
 from pyasn1 import error
 from pyasn1.type import univ, namedtype, char, tag
-from . import MAX, _wrapper
+
+from . import _wrapper
 
 
 class ImplicitSequence(univ.Sequence):
