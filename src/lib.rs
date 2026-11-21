@@ -92,7 +92,7 @@ fn decode_explicit<'call, 'py>(step: DecodeStep<'py>) -> PyResult<Bound<'py, PyA
     let first_tag_class = first_tag.get_item(0)?;
 
     if first_tag_fmt.eq(tag::FORMAT_CONSTRUCTED)? && first_tag_class.ne(CLASS_UNIVERSAL)? {
-        let new_offset = step.offset() + usize::try_from(step.header().length).unwrap();
+        let new_offset = step.offset() + usize::try_from(step.header().length()).unwrap();
 
         decode_der_rec(step.module().clone(), step.value_substrate(), step.asn1_spec().clone(), Some(
             step.tag_set().clone()), new_offset)
