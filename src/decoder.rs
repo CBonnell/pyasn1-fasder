@@ -56,7 +56,7 @@ impl<'py> DecodeStep<'py> {
     }
 
     pub fn value_substrate_len(&self) -> usize {
-        usize::try_from(self.header.length).unwrap()
+        usize::try_from(self.header.length()).unwrap()
     }
 
     pub fn value_substrate(&self) -> &'py [u8] {
@@ -79,7 +79,7 @@ impl<'py> DecodeStep<'py> {
 pub fn read_tlv(substrate: &[u8], offset: usize) -> PyResult<(Header, &[u8])> {
     let mut reader = der::SliceReader::new(substrate).unwrap();
 
-    let header = match reader.peek_header() {
+    let header = match Header::peek(&reader) {
         Err(e) => return Err(Pyasn1FasderError::new_err(format!("Error reading TLV header near substrate offset {}: {}", offset, e.to_string()))),
         Ok(h) => h
     };
